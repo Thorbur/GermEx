@@ -79,9 +79,9 @@ def get_article_text_from_url(article_url):
     html = urlopen(article_url).read()
     soup = BeautifulSoup(html, "html.parser")
 
-    # kill all script and style elements
+    # remove all script and style elements
     for script in soup(["script", "style"]):
-        script.extract()  # rip it out
+        script.extract()
 
     article = soup.find(name="div", attrs={"class": "section sectionZ sectionArticle"})
     if article:
@@ -89,7 +89,6 @@ def get_article_text_from_url(article_url):
 
         # get text
         full_text = ""
-        # print(sections)
         for section in sections:
             text = section.get_text()
             text = text.replace(r"<a[^>]*>", " ").replace("</a>", " ")
@@ -164,9 +163,6 @@ def get_plain_word(word):
 def generate_test(link, text):
     html_text = ""
 
-    # sentence by sentence
-    # each create gaps in 1-2 randomly selected words
-    # glue everything together
     sentences = []
     parts = text.strip().split(". ")
     for pn, part in enumerate(parts):
@@ -213,9 +209,10 @@ def save_test(file_path, test):
 
 def main():
     # TODO: add command line args
+    # TODO: abstraction into classes
     article_link = get_random_article_link_from_feed(FEED)
+    print(article_link)
     article_text = get_article_text_from_url(article_link)
-    # TODO: add article url to output
     test = generate_test(article_link, article_text)
     save_test("deutschtest_%s.html" % datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), test)
 
