@@ -92,7 +92,7 @@ def get_article_text_from_url(article_url):
         # print(sections)
         for section in sections:
             text = section.get_text()
-            text = text.replace(r"<a[^>]*>", "").replace("</a>", "")
+            text = text.replace(r"<a[^>]*>", " ").replace("</a>", " ")
 
             # break into lines and remove leading and trailing space on each
             lines = (line.strip() for line in text.splitlines())
