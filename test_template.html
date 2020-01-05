@@ -1,0 +1,38 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Deutschtest</title>
+    <script>
+        function evaluate_test() {
+            let all_gaps = document.getElementsByClassName("fill_in");
+            let correct = 0;
+            for(const gap of all_gaps){
+                let solution = gap.getAttribute("name");
+                let entered = gap.value;
+                if(solution === entered){
+                    gap.style.backgroundColor = "lightgreen";
+                    correct++;
+                } else {
+                    gap.style.backgroundColor = "tomato";
+                    gap.title = solution;
+                }
+            }
+            document.getElementById("result").innerHTML = "Ergebnis: " + correct/all_gaps.length*100 +"% richtig.";
+        }
+    </script>
+</head>
+<body style="background-color: blanchedalmond;">
+<div id="source">Artikelquelle: <a href="https://tagesschau.de" target="_blank">https://tagesschau.de</a></div>
+<br>
+<br>
+<div id="text">
+    <p>
+        Dies ist e<input type="text" class="fill_in" style="width: 60px;" name="in"> Test.
+        Bitte fülle al<input type="text" class="fill_in" style="width: 60px;" name="le"> Lücken aus.
+        Wenn alles richtig ist, dann beko<input type="text" class="fill_in" style="width: 60px;" name="mmst"> Du ein Eis.
+    </p>
+</div>
+<div><br><br><button id="evaluate" onclick="evaluate_test()">Auswerten</button><br><br></div>
+<div id="result"></div>
+</body>
+</html>
