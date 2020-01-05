@@ -135,7 +135,7 @@ def is_word_in_dict(word):
             DICT_LOOKUP_RESULTS[word] = result
             return result
     else:
-        return None
+        return False
 
 
 def create_gap_word(word):
