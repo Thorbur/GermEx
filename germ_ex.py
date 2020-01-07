@@ -90,7 +90,11 @@ def get_article_text_from_url(article_url):
         # get text
         full_text = ""
         for section in sections:
+            # remove all infokasten
+            for info_box in section.find_all(name="div", attrs={"class": "infokasten small"}):
+                info_box.extract()
             text = section.get_text()
+            # replace all links with extracted innerHTML
             text = text.replace(r"<a[^>]*>", " ").replace("</a>", " ")
 
             # break into lines and remove leading and trailing space on each
@@ -152,7 +156,7 @@ def get_plain_word(word):
     beginning = ""
     ending = ""
     while len(word) > 0 and word[0] in ["'", '"', "("]:
-        beginning += word
+        beginning += word[0]
         word = word[1:]
     while len(word) > 0 and word[-1] in [".", ",", "?", "!", '"', ":", ";", "'", ")"]:
         ending = word[-1] + ending
@@ -212,6 +216,7 @@ def main():
     # TODO: abstraction into classes
     article_link = get_random_article_link_from_feed(FEED)
     print(article_link)
+    article_link = "https://www.tagesschau.de/ausland/usa-iran-drohungen-103.html"
     article_text = get_article_text_from_url(article_link)
     test = generate_test(article_link, article_text)
     save_test("deutschtest_%s.html" % datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), test)
