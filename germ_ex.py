@@ -216,7 +216,6 @@ def main():
     # TODO: abstraction into classes
     article_link = get_random_article_link_from_feed(FEED)
     print(article_link)
-    article_link = "https://www.tagesschau.de/ausland/usa-iran-drohungen-103.html"
     article_text = get_article_text_from_url(article_link)
     test = generate_test(article_link, article_text)
     save_test("deutschtest_%s.html" % datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), test)
